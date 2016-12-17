@@ -1,0 +1,14 @@
+#TeXlipse project settings
+#Sat Oct 24 12:10:07 BRST 2015
+markTmpDer=true
+builderNum=2
+outputDir=
+makeIndSty=
+bibrefDir=
+outputFormat=pdf
+tempDir=tmp
+mainTexFile=efc2.tex
+outputFile=EFC2 - CIOTTO PINTON Gustavo.pdf
+langSpell=en
+markDer=true
+srcDir=

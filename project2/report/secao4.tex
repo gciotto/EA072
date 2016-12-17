@@ -1,0 +1,190 @@
+\section{Sistema de recomendação empregando \textit{k}-NN}
+
+\subsection {Abordagens \textit{User-based} e \textit{Item-based}}
+
+De acordo com o \textit{paper} \textit{State-of-the-art Recommender Systems},
+sistemas de recomendação que utilizam a abordagem \textit{user-based} exploram
+as similaridades entre usuários que possuam características em comum para
+predizer uma classificação que um usuário faria potencialmente para um item.
+Sendo assim, define-se o conjunto \(\mathbb{U}\) formado pelos usuários , o
+conjunto \(\mathbb{I}\) formado pelos itens e  o conjunto \(\mathbb{R}\) que
+possui todas as classificações dadas.  Uma classificação \(r_{ui}\) é dada pelo
+usuário \(u\in \mathbb{U}\) para o item \(i\in \mathbb{I}\)  e cada usuário
+\(u\) possui um conjunto de itens avaliados \(\mathbb{S}_u \subseteq
+\mathbb{I}\). A predição da classificação que um usuário \(a\in\mathbb{U}\)
+faria para o item \(i \notin \mathbb{S}_a\) e que considere \(K\) elementos do
+conjunto \(\mathbb{T}_a\), que contém \(K\) outros usuários cujas
+preferências sejam as mais parecidas com as de \(a\), é então:
+
+\begin{equation}
+p_{ai} = \frac{\sum_{\{ u\in \mathbb{T}_a | i\in \mathbb{S}_u \}} \left(
+sim(a,u) * r_{ui} \right)}{\sum_{\{ u\in \mathbb{T}_a | i\in \mathbb{S}_u \}}
+\left| sim(a,u)\right|}
+\end{equation}
+
+ou
+
+\begin{equation}
+p_{ai} = \bar{r_a} + \frac{\sum_{\{ u\in \mathbb{T}_a | i\in \mathbb{S}_u \}}
+\left( sim(a,u) * (r_{ui} - \bar{r_u})\right)}{\sum_{\{ u\in \mathbb{T}_a | i\in
+\mathbb{S}_u \}} \left| sim(a,u)\right|}
+\end{equation}
+
+em que \(sim(a,u)\) mede o grau de similaridade entre \(a\) e \(u\) e
+\(\bar{r_v}\) é a média das classificações de um usuário \(v\). A segunda
+expressão leva em consideração as diferenças de intensidade entre os usuários
+(por exemplo, em um sistema de 0 a 5, para \(u\), \textit{muito bom} pode ser
+3.5, mas, para \(a\), isso é 5) Essas equações nos dizem, portanto, que a
+predição realizada se aproximará da classificação feita pelo usuário \(u\) cujas
+características são as mais parecidas em relação a aquelas de \(a\).
+
+\vspace{12pt}
+
+A abordagem \textit{item-based}, por sua vez, utiliza os \textit{ratings} de
+itens \(j\) já classificados pelo usuário para predizer a possível classificação
+que o respectivo usuário daria a um item \(i\), dado o grau de semelhança entre este
+item não avaliado e aqueles avaliados. Define-se também a vizinhança
+\(\mathbb{T}_i\), contendo \(K\) itens próximos de \(i\) em termos de
+características. Assim como no caso anterior, essa predição \(p_{ai}\) pode ser
+realizada de duas maneiras:
+
+
+\begin{equation}
+p_{ai} = \frac{\sum_{\{ j\in \mathbb{S}_a \cap \mathbb{T}_i \}} \left(
+sim(i,j) * r_{aj} \right)}{\sum_{\{ j\in \mathbb{S}_a \cap \mathbb{T}_i \}}
+\left| sim(i,j)\right|}
+\end{equation}
+
+ou
+
+\begin{equation}
+p_{ai} = \bar{r_i} + \frac{\sum_{\{ j\in \mathbb{S}_a \cap \mathbb{T}_i \}}
+\left( sim(i,j) * (r_{aj} - \bar{r_j})\right)}{\sum_{\{ j\in \mathbb{S}_a \cap
+\mathbb{T}_i \}} \left| sim(i,j)\right|}
+\end{equation}
+
+em que \(sim(i,j)\) mede o grau de similaridade entre os itens \(i\) e \(j\) e
+\(\bar{r_k}\) é a média das classificações feitas para o item \(k\). Como na
+abordagem anterior, considera-se que itens muito parecidos terão
+\textit{ratings} também muito parecidos.
+
+\subsection{Exemplo de Aplicação}
+ 
+Utilizando o programa \texttt{exemplo.m} como referência e o \textit{toolbox}
+fornecido, foi possível implementar a função \texttt{movieLens\_impute\_data},
+representada pelo programa \ref{lst:movielens} logo abaixo. A função define um
+usuário, cuja identificação está contida na variável \texttt{user\_id}, para
+qual serão calculadas as respectivas recomendações. O programa possui também
+outro parâmetro, chamado \texttt{k\_neighbors}, que define a quantidade de
+vizinhos que serão utilizados no cálculo. Ao final, são impressas as
+recomendações encontradas e os \textit{ratings} dos vizinhos mais próximos do
+usuário.
+
+\lstinputlisting [language=Matlab, caption={
+	Recomenda filmes para um data usuário segundo o método kNN.},
+	label={lst:movielens}] {kNN/movieLens_impute_data.m}
+ 
+\vspace{12pt}
+ 
+Os resultados da execução do programa acima estão representados nas tabelas
+abaixo. Foi escolhido aleatoriamente o usuário 898 e foram utilizados os 3
+vizinhos mais próximos. No bloco superior da coluna da esquerda, estão
+representadas as recomendações calculadas e que foram bem-sucedidas, isto é, as
+recomendações que a função \texttt{knnImputeRo.m} não retornou como
+\textit{NaN}. Observa-se que os filmes para os quais uma recomendação foi
+calculada devem possuir ao menos uma \textit{rating} não nula em algum dos
+dos vizinhos. Caso contrário, não haveria dados suficientes para o cálculo das
+respectivas predições. Nos outros 3 blocos estão contidos as \textit{ratings}
+realizadas pelos vizinhos, em ordem de semelhança com o usuário. Por exemplo, o
+vizinho 408 possui uma semelhança de 64.8\% com o usuário e assim por diante.
+
+\vspace{12pt}
+ 
+É possível alguns fatos:
+
+\begin{itemize}
+  \item O item 294 foi classificado por 408 e 205, sendo que o primeiro possui
+  uma semelhança de 64.8\% com o usuário 898 e o segundo, apenas 20.6\%. 408 deu
+  a pontuação máxima, enquanto 205 deu apenas uma nota 3.0. A nota recomendada
+  para 898 foi 4.49, que é muito mais próxima de 5 do que de 3. Esse resultado
+  está correta, visto que 408 é muito mais semelhante a 898 do que 205 e,
+  portanto, espera-se que eles dêem notas parecidas.
+
+  \item  O item 1025 só foi avaliado por 205, que não possui uma grande
+  semelhança com 898. A nota recomendada estará, portanto, ao redor do
+  \textit{rating} feito por 205, mas possuirá uma pequena margem que levará em
+  conta essa falta de \textit{total} semelhança.
+
+  \item O item 333 foi avaliado pelos usuários 384 e 205. Ambos deram nota 4. A
+  nota recomendada para 898 deve ser, portanto, muito próxima de 4, já que dois
+  outros vizinhos deram a mesma nota. Observa-se justamente este fato: a nota
+  recomendada para 898 é 3.99.
+\end{itemize} 
+
+ 
+\begin{minipage} {0.45\textwidth}
+\begin{lstlisting}[style=nonumbers]
+=============================
+Estimativas para usuario 898
+=============================
+Recomendacao para filme 268 : 2.64
+Recomendacao para filme 269 : 3.64
+Recomendacao para filme 289 : 4.50
+Recomendacao para filme 294 : 4.49
+Recomendacao para filme 304 : 3.64
+Recomendacao para filme 322 : 3.64
+Recomendacao para filme 326 : 4.64
+Recomendacao para filme 329 : 2.36
+Recomendacao para filme 333 : 3.99
+Recomendacao para filme 355 : 3.36
+Recomendacao para filme 678 : 1.64
+Recomendacao para filme 875 : 2.64
+Recomendacao para filme 878 : 3.36
+Recomendacao para filme 879 : 3.36
+Recomendacao para filme 984 : 1.64
+Recomendacao para filme 989 : 3.36
+Recomendacao para filme 1025 : 1.64
+\end{lstlisting}
+
+\begin{lstlisting}[style=nonumbers]
+=============================
+Ratings do usuario 408 
+de maior similaridade (0.648)
+=============================
+Rating para filme 294 : 5.00
+\end{lstlisting}
+\end{minipage} \hspace{0.03\textwidth}% 
+\begin{minipage} {0.45\textwidth}
+\begin{lstlisting}[style=nonumbers]
+=============================
+Ratings do usuario 384
+ de maior similaridade (0.212)
+=============================
+Rating para filme 289 : 5.00
+Rating para filme 329 : 3.00
+Rating para filme 333 : 4.00
+Rating para filme 355 : 4.00
+Rating para filme 878 : 4.00
+Rating para filme 879 : 4.00
+Rating para filme 989 : 4.00
+\end{lstlisting}
+
+\begin{lstlisting}[style=nonumbers]
+=============================
+Ratings do usuario 205
+de maior similaridade (0.206)
+=============================
+Rating para filme 268 : 2.00
+Rating para filme 269 : 3.00
+Rating para filme 289 : 4.00
+Rating para filme 294 : 3.00
+Rating para filme 304 : 3.00
+Rating para filme 322 : 3.00
+Rating para filme 326 : 4.00
+Rating para filme 333 : 4.00
+Rating para filme 678 : 1.00
+Rating para filme 875 : 2.00
+Rating para filme 984 : 1.00
+Rating para filme 1025 : 1.00
+\end{lstlisting}
+\end{minipage}
