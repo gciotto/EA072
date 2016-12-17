@@ -1,0 +1,14 @@
+#TeXlipse project settings
+#Mon Aug 31 16:16:07 BRT 2015
+markTmpDer=true
+builderNum=2
+outputDir=
+makeIndSty=
+bibrefDir=
+outputFormat=pdf
+tempDir=tmp
+mainTexFile=efc1.tex
+outputFile=EFC1_CIOTTO_PINTON.pdf
+langSpell=pt
+markDer=true
+srcDir=

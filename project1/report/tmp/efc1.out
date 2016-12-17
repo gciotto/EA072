@@ -1,0 +1,16 @@
+\BOOKMARK [1][-]{section.2}{Sele\347\343o de vari\341veis empregando filtros e wrappers}{}% 1
+\BOOKMARK [1][-]{section.3}{S\351ries temporais e a tarefa de predi\347\343o}{}% 2
+\BOOKMARK [2][-]{subsection.3.0}{Normaliza\347\343o dos dados}{section.3}% 3
+\BOOKMARK [2][-]{subsection.3.1}{Vari\341veis participantes do modelo - Filtro de correla\347\343o}{section.3}% 4
+\BOOKMARK [2][-]{subsection.3.2}{S\355ntese de um preditor linear}{section.3}% 5
+\BOOKMARK [3][-]{subsubsection.3.2.1}{Caso n\343o regularizado}{subsection.3.2}% 6
+\BOOKMARK [3][-]{subsubsection.3.2.2}{Caso regularizado}{subsection.3.2}% 7
+\BOOKMARK [2][-]{subsection.3.3}{S\355ntese de uma rede neural MLP}{section.3}% 8
+\BOOKMARK [3][-]{subsubsection.3.3.1}{Determina\347\343o do n\372mero de itera\347\365es}{subsection.3.3}% 9
+\BOOKMARK [3][-]{subsubsection.3.3.2}{Determina\347\343o do n\372mero de neur\364nios na camada intermedi\341ria}{subsection.3.3}% 10
+\BOOKMARK [2][-]{subsection.3.4}{S\355ntese da M\341quina de Aprendizado M\341ximo - ELM}{section.3}% 11
+\BOOKMARK [2][-]{subsection.3.5}{An\341lise dos resultados dos preditores lineares, MLPs e ELMs}{section.3}% 12
+\BOOKMARK [1][-]{section.4}{Conclus\365es Finais}{}% 13
+\BOOKMARK [1][-]{section.5}{Anexos}{}% 14
+\BOOKMARK [2][-]{subsection.5.1}{Programas}{section.5}% 15
+\BOOKMARK [2][-]{subsection.5.2}{Figuras}{section.5}% 16

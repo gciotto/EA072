@@ -1,0 +1,11 @@
+function [X, Y] = gera_X(dados, saida, L, )
+
+clear all;
+
+load(dados);
+
+
+
+save(saida, X, Y);
+
+end

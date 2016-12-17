@@ -1,0 +1,40 @@
+\section{Conclusões Finais} 
+ 
+A partir dos exemplos práticos desenvolvidos nessa lista, foi possível explorar
+as principais vantagens, desvantagens e recursos de alguns conceitos abordados
+durante a aula. Primeiramente, para a seleção de variáveis e filtros
+constatou-se que, ao contrário destes últimos, nem sempre as variáveis mais
+correlatas com a saída são escolhidas para participar do modelo.
+Adicionalmente, apesar dos métodos \textit{wrappers} apresentarem uma
+complexidade computacional maior que os filtros, eles selecionam as variáveis
+de modo que o máximo de informação fique contido no modelo, isto é, o erro
+calculado junto ao modelo linear seja mínimo. Observou-se que os resultados
+para o \textit{backward elimination} e \textit{forward selection} foram 
+bastante similares, diferenciando-se somente em um número bem pequeno de
+variáveis que foram selecionadas em um método, mas não no outro. Essa afirmação
+reforça a ideia que ambos os modelos selecionam as melhores variáveis para
+compor o modelo. 
+
+\vspace{12pt}
+
+Em relação aos preditores implementados, nos deparamos com o compromisso
+"recursos computacionais \(\times\) resultados", isto é, à medida que
+adicionamos a um determinado método algum "grau de liberdade" (como número de
+neurônios ou de iterações, por exemplo), tendemos a encontrar uma solução
+apresentando um erro menor. Isso foi observado principalmente no duelo entre os
+preditores lineares e as redes neurais MLP. Para estas últimas, realizou-se
+vários treinamentos distintos (da ordem de 1800 treinamentos - rever seção
+\ref{sec:mlp}), mas, ao fim, encontra-se um resultado melhor em relação a ambos
+os preditores lineares (regularizado e não regularizado). Um resultado que foi
+constatato e que não era esperado é o fato de que as ELMs treinadas na seção
+\ref{sec:elm}  apresentarem performance inferior até mesmo em relação aos
+preditores lineares. Neste caso, foram treinadas várias ELMs com grandes
+variações no número de neurônios nas suas camadas intermediárias e no parâmetro
+regularizador \(c\). Mesmo com essa quantidade de processamento, os resultados
+encontrados foram insuficientes, se comparados às MLPs e preditores lineares.
+
+\vspace{12pt} 
+
+Enfim, de maneira geral, este exercício foi bastante abrangente, permitindo aos
+alunos desenvolver suas habilidades ligadas à programação de redes neurais em
+MATLAB.
